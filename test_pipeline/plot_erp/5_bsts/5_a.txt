@@ -1,0 +1,7 @@
+Bin 1
+Target
+.{1}
+
+Bin 2
+Non-Target
+.{2;3;4;5}
