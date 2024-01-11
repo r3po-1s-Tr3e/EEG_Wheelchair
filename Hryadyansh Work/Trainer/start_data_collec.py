@@ -13,9 +13,12 @@ n = input("Enter number of trials: ")
 order = input("Enter order of alphabet in each trial: ")
 order = order.split()
 
-for i in range(int(n)):
-    print("Trial: ", i+1)
-    for alphabet in order:
+for trial in range(int(n)):
+    print("Trial: ", trial+1)
+    for i in range(len(order)):
+        alphabet = order[i]
         print("Count the occurance of alphabet: ", alphabet)
-        subprocess.call([batch_file_path, name, alphabet], shell=True)
+        time.sleep(2.5)
+        trial_no = str(trial+1)
+        subprocess.call([batch_file_path, name, alphabet, trial_no], shell=True)
         print("Alphabet: ", alphabet, " done")
