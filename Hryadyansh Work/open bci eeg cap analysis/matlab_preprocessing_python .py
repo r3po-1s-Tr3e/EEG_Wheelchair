@@ -59,7 +59,14 @@ filtered_event_timestamps = [timestamp for timestamp, mask in zip(marker_stream[
 #event_samples = ((np.array(filtered_event_timestamps) ) - event_timestamps[0] ).astype(int)
 event_samples = (np.array(filtered_event_timestamps)*sfreq ).astype(int)
 # Create an events array for MNE
-events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
+
+if len(event_samples) == len(filtered_event_codes):
+    events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
+else:
+    diff = len(event_samples) - len(filtered_event_codes)
+    events = np.column_stack((event_samples[:-diff], np.zeros_like(event_samples[:-diff]), filtered_event_codes)).astype(int)
+
+# events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
 print()
 print("EVENTS:")
 print()

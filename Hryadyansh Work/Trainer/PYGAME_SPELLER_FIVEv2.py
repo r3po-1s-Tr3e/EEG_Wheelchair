@@ -47,13 +47,14 @@ def offline(alphabet):
     FPS = 2  # 2 FPS should give us epochs of 500 ms
 
     # Countdown timer
-    countdown_seconds = 3
+    countdown_seconds = 5
     countdown_font = pygame.font.SysFont("None", 90)
     instruction_font = pygame.font.SysFont("None", 50)
 
     # Display countdown timer and message
     for i in range(countdown_seconds, 0, -1):
         screen.fill((0, 0, 0))  # Black background
+
 
         # Countdown timer
         countdown_text = countdown_font.render(f"Count the occurrence of letter: {alphabet} in {i} seconds",

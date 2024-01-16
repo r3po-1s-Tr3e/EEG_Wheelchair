@@ -22,3 +22,7 @@ for trial in range(int(n)):
         trial_no = str(trial+1)
         subprocess.call([batch_file_path, name, alphabet, trial_no], shell=True)
         print("Alphabet: ", alphabet, " done")
+        time.sleep(0.5)
+        print("Press Enter to continue")
+        input()
+

@@ -47,16 +47,26 @@ def offline(alphabet):
     FPS = 2  # 2 FPS should give us epochs of 500 ms
 
     # Countdown timer
-    countdown_seconds = 3
+    countdown_seconds = 5
     countdown_font = pygame.font.SysFont("None", 90)
+    instruction_font = pygame.font.SysFont("None", 50)
 
     # Display countdown timer and message
     for i in range(countdown_seconds, 0, -1):
         screen.fill((0, 0, 0))  # Black background
+
+        # Countdown timer
         countdown_text = countdown_font.render(f"Count the occurrence of letter: {alphabet} in {i} seconds",
                                                True, (255, 255, 255))
         screen.blit(countdown_text, (WIDTH // 2 - countdown_text.get_width() // 2,
-                                     HEIGHT // 2 - countdown_text.get_height() // 2))
+                                     HEIGHT // 2 - countdown_text.get_height() // 2 - 30))
+
+        # Instruction line
+        instruction_text = instruction_font.render('Press "D" when you see, alphabet ' + alphabet + ' and press "K" otherwise',
+                                                   True, (255, 255, 255))
+        screen.blit(instruction_text, (WIDTH // 2 - instruction_text.get_width() // 2,
+                                       HEIGHT // 2 + instruction_text.get_height()))
+
         pygame.display.flip()
         pygame.time.delay(1000)  # Delay for one second
         screen.blit(background, (0, 0))  # Clean the screen with the background
@@ -73,8 +83,8 @@ def offline(alphabet):
     numtrials = 0
 
     # Function to write letters on the screen
-    def write(msg, colour=(255, 255, 100)):
-        myfont = pygame.font.SysFont("None", 90)
+    def write(msg, font_size=90, colour=(255, 255, 100)):
+        myfont = pygame.font.SysFont("None", font_size)
         mytext = myfont.render(msg, True, colour)
         mytext = mytext.convert_alpha()
         return mytext
@@ -102,7 +112,7 @@ def offline(alphabet):
 
             # Display the highlighted letter in the center with yellow color
             screen.fill((0, 0, 0))  # Black background
-            text_surface = write(grid[highlight], (255, 255, 100))
+            text_surface = write(grid[highlight], font_size=150, colour=(255, 255, 100))
             screen.blit(text_surface, (WIDTH // 2 - text_surface.get_width() // 2,
                                        HEIGHT // 2 - text_surface.get_height() // 2))
             pygame.display.flip()

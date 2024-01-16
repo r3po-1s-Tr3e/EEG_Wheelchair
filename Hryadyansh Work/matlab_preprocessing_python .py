@@ -10,7 +10,7 @@ high_cutoff = 15
 EPOCHS_TIMING = (-0.2, 0.8)
 
 # Paths to your files   
-data_file = r"C:\Users\hryad\Desktop\iitm\BCI Wheelchair\EEG_Wheelchair - Copy\10-12-Data\anuj_D.xdf"
+data_file = r"C:\Users\hryad\Desktop\iitm\BCI Wheelchair\EEG_Wheelchair - Copy\10-12-Data\rishi_A.xdf"
 EVENTS_FILE = r"C:\Users\hryad\Desktop\iitm\BCI Wheelchair\EEG_Wheelchair - Copy\test_pipeline\events\foo_events.txt"
 
 
@@ -59,7 +59,15 @@ filtered_event_timestamps = [timestamp for timestamp, mask in zip(marker_stream[
 #event_samples = ((np.array(filtered_event_timestamps) ) - event_timestamps[0] ).astype(int)
 event_samples = (np.array(filtered_event_timestamps)*sfreq ).astype(int)
 # Create an events array for MNE
-events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
+
+if len(event_samples) == len(filtered_event_codes):
+    events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
+else:
+    diff = len(event_samples) - len(filtered_event_codes)
+    events = np.column_stack((event_samples[:-diff], np.zeros_like(event_samples[:-diff]), filtered_event_codes)).astype(int)
+
+
+# events = np.column_stack((event_samples, np.zeros_like(event_samples), filtered_event_codes)).astype(int)
 # Create epochs
 epochs = mne.Epochs(raw, events, tmin=EPOCHS_TIMING[0], tmax=EPOCHS_TIMING[1], preload=True)
 print(epochs)
@@ -95,14 +103,21 @@ nearest_indices = [find_nearest_index(list(np.array(eeg_stream['time_stamps']).T
 print("Nearest indices in list A for elements in list B:")
 print(nearest_indices)
 
-events = np.column_stack((nearest_indices[:-1], np.zeros_like(nearest_indices[:-1]), filtered_event_codes)).astype(int)
+if len(nearest_indices) == len(filtered_event_codes):
+    events = np.column_stack((nearest_indices, np.zeros_like(nearest_indices), filtered_event_codes)).astype(int)
+else:
+    diff = len(nearest_indices) - len(filtered_event_codes)
+    events = np.column_stack((nearest_indices[:-diff], np.zeros_like(nearest_indices[:-diff]), filtered_event_codes)).astype(int)
+# print(events)
+
+# events = np.column_stack((nearest_indices[:-1], np.zeros_like(nearest_indices[:-1]), filtered_event_codes)).astype(int)
 # Create epochs
 epochs = mne.Epochs(raw, events, tmin=EPOCHS_TIMING[0], tmax=EPOCHS_TIMING[1], preload=True)
 print(epochs)
 # Average epochs to create ERP
 evoked = epochs.average()
 # Save the epochs to a FIF file
-epochs_filename = r"C:\Users\hryad\Desktop\iitm\BCI Wheelchair\EEG_Wheelchair - Copy\test_pipeline\mat_files\anuj_D-epo.fif"
+epochs_filename = r"C:\Users\hryad\Desktop\iitm\BCI Wheelchair\EEG_Wheelchair - Copy\test_pipeline\mat_files\sanat_C_2-epo.fif"
 epochs.save(epochs_filename, overwrite=True)
 
 

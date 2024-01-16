@@ -10,5 +10,7 @@ echo Received variables: name=%name%, alphabet=%alphabet%, trial = %trial%
 
 start /min cmd /c "%~dp0pygame_start_batch.bat" %alphabet%
 start /min cmd /c "%~dp0get_from_CLI.bat" %name% %alphabet% %trial%
+timeout /t 2 /nobreak
+python "%~dp0biofeedback.py" %name% %alphabet% %trial%
 timeout /t 29 /nobreak
 EXIT /B
