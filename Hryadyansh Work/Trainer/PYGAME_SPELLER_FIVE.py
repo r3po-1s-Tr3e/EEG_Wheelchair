@@ -25,7 +25,7 @@ def generate_random_array(block_length, block_count):
     return randoms_array
     
     
-def offline():
+def offline(alphabet):
     info = StreamInfo('Markers', 'ImageMarkers', 1, 0, 'string', 'myuidw43536')
     outlet = StreamOutlet(info)
 
