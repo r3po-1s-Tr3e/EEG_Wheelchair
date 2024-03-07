@@ -11,5 +11,5 @@ echo Received variables: name=%name%, alphabet=%alphabet%, trial = %trial%
 
 timeout /t 6 /nobreak
 LabRecorderCLI %name%_%alphabet%_%trial%.xdf "type='ImageMarkers'" "type='EEG'"
-timeout /t 60 /nobreak
+timeout /t 61 /nobreak
 @REM type enter1.txt

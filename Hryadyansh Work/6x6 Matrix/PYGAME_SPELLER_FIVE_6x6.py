@@ -3,6 +3,7 @@ import sys,os
 import pygame, random, os, sys
 import numpy as np      
 import time
+from pylsl import local_clock
 # from psychopy import core, parallel
 
 # def_col = (30, 144, 255)  # Default color 
@@ -29,7 +30,15 @@ def generate_random_array(block_length, block_count):
     return randoms_array
     
     
-def offline(alphabet):
+def offline(alphabet, trial, name):
+    # Create a text file in the Key Press Markers folder
+    folder_path = "Key Press Markers"
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    filename = os.path.join(folder_path, f"{name}_{alphabet}_{trial}.txt")
+    
+    # Print the filename
+    print(f"Text file created: {filename}")
     info = StreamInfo('Markers', 'ImageMarkers', 1, 0, 'string', 'myuidw43536')
     outlet = StreamOutlet(info)
 
@@ -191,6 +200,11 @@ def offline(alphabet):
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
                     mainloop = False # user pressed ESC
+                elif event.key == pygame.K_d:  # user pressed 'D'
+                    with open(filename, 'w') as file:
+                        timestamp = local_clock()
+                        file.write(f"{str(oldhighlight+1)}, {timestamp}\n")
+            
 
         if numtrials == 60:
             pygame.quit()
