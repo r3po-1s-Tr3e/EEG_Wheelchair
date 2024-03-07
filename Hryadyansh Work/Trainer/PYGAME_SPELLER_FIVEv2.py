@@ -17,6 +17,7 @@ def generate_random_array(block_length, block_count):
 
 
 def offline(alphabet):
+    
     # Set up LSL stream information
     info = StreamInfo('Markers', 'ImageMarkers', 1, 0, 'string', 'myuidw43536')
     outlet = StreamOutlet(info)
